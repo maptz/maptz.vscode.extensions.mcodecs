@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Maptz.MCodeCS.Tool": {
+      "commandName": "Project",
+      "commandLineArgs": "sort -i \"X:\\+++DEV\\MaptzGitHub\\vscode\\maptz.vscode.extensions.mcodecs\\src\\Maptz.MCodeCS.Tool\\Implementations\\Program.cs\""
+    }
+  }
+}
