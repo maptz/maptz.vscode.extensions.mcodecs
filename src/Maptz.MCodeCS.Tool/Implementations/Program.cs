@@ -4,13 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Maptz.MCodeCS.Engine;
 using Maptz.Coding.Analysis.CSharp.Sorting;
+using Maptz.Coding.Analysis.CSharp.TestCreator;
+using Maptz.Coding.Analysis.CSharp.Misc;
 
 namespace Maptz.MCodeCS.Tool
 {
 
-  class Program : CliProgramBase<AppSettings>
+    class Program : CliProgramBase<AppSettings>
     {
-        public static void Main(string[] args) 
+        public static void Main(string[] args)
         {
             new Program(args);
         }
@@ -32,6 +34,17 @@ namespace Maptz.MCodeCS.Tool
             services.AddTransient<ISortGroupingService, DefaultSortGroupingService>();
             services.AddTransient<IMemberDeclarationOrderingService, DefaultSortGroupingService>();
 
+
+            services.AddTransient<ICreateTestsService, CreateTestsService>();
+            services.AddTransient<IAsyncMethodConverterService, AsyncMethodConverterService>();
+            services.AddTransient<IProtectedVirtualMethodConverterService, ProtectedVirtualMethodConverterService>();
+            services.AddTransient<IExpandPropertyService, ExpandPropertyService>();
+
+            services.AddTransient<IRemoveUnusedUsingsService, RemoveUnusedUsingsService>();
+            services.AddTransient<IExpressPropertyService, ExpressPropertyService>();
+            services.AddTransient<IExpressStatementService, ExpressStatementService>();
+            services.AddTransient<IExtractClassService, ExtractClassService>();
+            services.AddTransient<IClassExtractorService, ClassExtractorService>();
             //services.AddLogging(loggingBuilder => loggingBuilder.AddConfiguration(Configuration.GetSection("Logging")).AddConsole().AddDebug());
         }
     }
