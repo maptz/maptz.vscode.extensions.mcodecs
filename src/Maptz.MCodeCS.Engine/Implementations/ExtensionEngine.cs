@@ -104,8 +104,9 @@ namespace Maptz.MCodeCS.Engine
         {
             var tuple = await this.WorkspaceProvider.CreateWorkspaceAsync(fileContents, filePath);
             var csharpSorterService = this.ServiceProvider.GetRequiredService<ICSharpSorterService>();
-            var codeChanges = await csharpSorterService.SortType(tuple.workspace, tuple.document);
-            Console.WriteLine(codeChanges);
+            throw new NotImplementedException();
+            //var codeChanges = await csharpSorterService.SortType(tuple.workspace, tuple.document);
+            //Console.WriteLine(codeChanges);
         }
     }
 }
