@@ -27,9 +27,11 @@ namespace Maptz.MCodeCS.Engine
 
         public async Task AddTestAsync(string fileContents, string filePath, int cursor)
         {
-            var tuple = await this.WorkspaceProvider.CreateWorkspaceAsync(fileContents, filePath);
+            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor); 
+            var tuple = await cmp.GetCodeManipulationContextAsync();
             var service = this.ServiceProvider.GetRequiredService<ICreateTestsService>();
-            var codeChanges = await service.CreateTest(tuple.workspace, tuple.document, cursor);
+            await service.Convert(tuple);
+            
             throw new NotImplementedException("What is the right thing to return?");
         }
 

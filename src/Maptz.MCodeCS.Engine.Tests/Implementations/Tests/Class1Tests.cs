@@ -5,7 +5,7 @@ using Maptz.Testing;
 namespace Maptz.MCodeCS.Engine.Tests
 {
 
-    public class Class1Tests
+    public class ExtensionEngineTests
     {
         /* #region Public Methods */
         [Fact]
