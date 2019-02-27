@@ -4,6 +4,31 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="resx\AsyncMethodSample1.curr" />
+    <None Remove="resx\AsyncMethodSample1.expected" />
+    <None Remove="resx\CreateSettingsSample1.curr" />
+    <None Remove="resx\CreateSettingsSample1.expected" />
+    <None Remove="resx\CSharpAutoDocumenterSample1.curr" />
+    <None Remove="resx\CSharpAutoDocumenterSample1.expected" />
+    <None Remove="resx\ExpandPropertySample1.curr" />
+    <None Remove="resx\ExpandPropertySample1.expected" />
+    <None Remove="resx\ExpressPropertySample1.curr" />
+    <None Remove="resx\ExpressPropertySample1.expected" />
+    <None Remove="resx\ExpressStatementSample1.curr" />
+    <None Remove="resx\ExpressStatementSample1.expected" />
+    <None Remove="resx\ExtractClassSample1.curr" />
+    <None Remove="resx\ExtractClassSample1.expected" />
+    <None Remove="resx\ParameterCheckInserterSample1.curr" />
+    <None Remove="resx\ParameterCheckInserterSample1.expected" />
+    <None Remove="resx\PropertyUpdaterSample1.curr" />
+    <None Remove="resx\PropertyUpdaterSample1.expected" />
+    <None Remove="resx\ProtectedVirtualMethodConverterSample1.curr" />
+    <None Remove="resx\ProtectedVirtualMethodConverterSample1.expected" />
+    <None Remove="resx\RemoveUnusedUsingsSample1.curr" />
+    <None Remove="resx\RemoveUnusedUsingsSample1.expected" />
+  </ItemGroup>
 
   <ItemGroup>
   <PackageReference Include="Maptz.Testing.Base" Version="0.0.10" />
@@ -15,5 +40,38 @@
     </PackageReference>
     <PackageReference Include="moq" Version="4.10.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="resx\AsyncMethodSample1.curr" />
+    <EmbeddedResource Include="resx\AsyncMethodSample1.expected" />
+    <EmbeddedResource Include="resx\CreateSettingsSample1.curr" />
+    <EmbeddedResource Include="resx\CreateSettingsSample1.expected" />
+    <EmbeddedResource Include="resx\CSharpAutoDocumenterSample1.curr" />
+    <EmbeddedResource Include="resx\CSharpAutoDocumenterSample1.expected" />
+    <EmbeddedResource Include="resx\ExpandPropertySample1.curr" />
+    <EmbeddedResource Include="resx\ExpandPropertySample1.expected" />
+    <EmbeddedResource Include="resx\ExpressPropertySample1.curr" />
+    <EmbeddedResource Include="resx\ExpressPropertySample1.expected" />
+    <EmbeddedResource Include="resx\ExpressStatementSample1.curr" />
+    <EmbeddedResource Include="resx\ExpressStatementSample1.expected" />
+    <EmbeddedResource Include="resx\ExtractClassSample1.curr" />
+    <EmbeddedResource Include="resx\ExtractClassSample1.expected" />
+    <EmbeddedResource Include="resx\ParameterCheckInserterSample1.curr" />
+    <EmbeddedResource Include="resx\ParameterCheckInserterSample1.expected" />
+    <EmbeddedResource Include="resx\PropertyUpdaterSample1.curr" />
+    <EmbeddedResource Include="resx\PropertyUpdaterSample1.expected" />
+    <EmbeddedResource Include="resx\ProtectedVirtualMethodConverterSample1.curr" />
+    <EmbeddedResource Include="resx\ProtectedVirtualMethodConverterSample1.expected" />
+    <EmbeddedResource Include="resx\RemoveUnusedUsingsSample1.curr" />
+    <EmbeddedResource Include="resx\RemoveUnusedUsingsSample1.expected" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\MaptzBitBucket\netcorelibs\maptz.coding.analysis.base\src\Maptz.Coding.Analysis.CSharp.Misc\Maptz.Coding.Analysis.CSharp.Misc.csproj" />
+    <ProjectReference Include="..\..\..\..\..\MaptzBitbucket\netcorelibs\maptz.coding.analysis.base\src\Maptz.Coding.Analysis.CSharp.Sorting\Maptz.Coding.Analysis.CSharp.Sorting.csproj" />
+    <ProjectReference Include="..\..\..\..\..\MaptzBitBucket\netcorelibs\maptz.coding.analysis.base\src\Maptz.Coding.Analysis.CSharp.TestCreator\Maptz.Coding.Analysis.CSharp.TestCreator.csproj" />
+    <ProjectReference Include="..\..\..\..\..\MaptzBitbucket\netcorelibs\maptz.coding.analysis.base\src\Maptz.Coding.Analysis.CSharp\Maptz.Coding.Analysis.CSharp.Base.csproj" />
+    <ProjectReference Include="..\Maptz.MCodeCS.Engine\Maptz.MCodeCS.Engine.csproj" />
   </ItemGroup>
 </Project>

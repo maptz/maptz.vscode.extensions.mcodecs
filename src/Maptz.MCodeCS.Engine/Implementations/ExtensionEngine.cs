@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Maptz.Coding.Analysis.CSharp.TestCreator;
 using Maptz.Coding.Analysis.CSharp.Misc;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Maptz.MCodeCS.Engine
 {
@@ -16,99 +17,83 @@ namespace Maptz.MCodeCS.Engine
     public class ExtensionEngine : IExtensionEngine
     {
 
-        public ExtensionEngine(IWorkspaceProvider workspaceProvider, IServiceProvider serviceProvider)
+        public ExtensionEngine(IWorkspaceProvider workspaceProvider, IServiceProvider serviceProvider, IOutputService outputService)
         {
             this.WorkspaceProvider = workspaceProvider;
             this.ServiceProvider = serviceProvider;
+            this.OutputService = outputService;
         }
 
         public IWorkspaceProvider WorkspaceProvider { get; }
         public IServiceProvider ServiceProvider { get; }
+        public IOutputService OutputService { get; }
+
+        public async Task RunCodeManipulator<T>(string fileContents, string filePath, int cursor) where T: ICodeManipulatorService
+        {
+            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor);
+            var tuple = await cmp.GetCodeManipulationContextAsync();
+            var service = this.ServiceProvider.GetRequiredService<T>();
+
+            var cr = await service.Convert(tuple);
+            var implementor = this.ServiceProvider.GetRequiredService<ICodeChangeImplementorService>() as CodeChangeImplementorService;
+            await implementor.ApplyChangeAsync(tuple, cr);
+
+            var json = JsonConvert.SerializeObject(implementor.Changes);
+            this.OutputService.Write(json);
+        }
 
         public async Task AddTestAsync(string fileContents, string filePath, int cursor)
         {
-            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor); 
-            var tuple = await cmp.GetCodeManipulationContextAsync();
-            var service = this.ServiceProvider.GetRequiredService<ICreateTestsService>();
-            await service.Convert(tuple);
-            
-            throw new NotImplementedException("What is the right thing to return?");
+            await this.RunCodeManipulator<ICreateTestsService>(fileContents, filePath, cursor);
         }
 
         public async Task ConvertToAsyncAsync(string fileContents, string filePath, int cursor)
         {
-            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor); ;
-            var tuple = await cmp.GetCodeManipulationContextAsync();
-            var service = this.ServiceProvider.GetRequiredService<IAsyncMethodConverterService>();
-
-            await service.Convert(tuple);
-            throw new NotImplementedException("What is the right thing to return?");
+            await this.RunCodeManipulator<IAsyncMethodConverterService>(fileContents, filePath, cursor);
         }
 
         public async Task ConvertToProtectedVirtualAsync(string fileContents, string filePath, int cursor)
         {
-            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor); ;
-            var tuple = await cmp.GetCodeManipulationContextAsync();
-            var service = this.ServiceProvider.GetRequiredService<IProtectedVirtualMethodConverterService>();
-            await service.Convert(tuple);
-            throw new NotImplementedException("What is the right thing to return?");
+            await this.RunCodeManipulator<IProtectedVirtualMethodConverterService>(fileContents, filePath, cursor);
         }
 
         public async Task ExpandPropertyAsync(string fileContents, string filePath, int cursor)
         {
-            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor); ;
-            var tuple = await cmp.GetCodeManipulationContextAsync();
-            var service = this.ServiceProvider.GetRequiredService<IExpandPropertyService>();
-            await service.Convert(tuple);
-            throw new NotImplementedException("What is the right thing to return?");
+            await this.RunCodeManipulator<IExpandPropertyService>(fileContents, filePath, cursor);
+            
         }
 
         public async Task ExpressAsPropertyAsync(string fileContents, string filePath, int cursor)
         {
-            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor); ;
-            var tuple = await cmp.GetCodeManipulationContextAsync();
-            var service = this.ServiceProvider.GetRequiredService<IExpressPropertyService>();
-            await service.Convert(tuple);
-            throw new NotImplementedException("What is the right thing to return?");
+            await this.RunCodeManipulator<IExpressPropertyService>(fileContents, filePath, cursor);
+
+            
         }
 
         public async Task ExpressAsStatementAsync(string fileContents, string filePath, int cursor)
         {
-            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor); ;
-            var tuple = await cmp.GetCodeManipulationContextAsync();
-            var service = this.ServiceProvider.GetRequiredService<IExpressStatementService>();
-            await service.Convert(tuple);
-            throw new NotImplementedException("What is the right thing to return?");
+            await this.RunCodeManipulator<IExpressStatementService>(fileContents, filePath, cursor);
+
+            
 
         }
 
         public async Task ExtractClassAsync(string fileContents, string filePath, int cursor)
         {
-            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor); ;
-            var tuple = await cmp.GetCodeManipulationContextAsync();
-            var service = this.ServiceProvider.GetRequiredService<IExtractClassService>();
-            await service.Convert(tuple);
-            throw new NotImplementedException("What is the right thing to return?");
+            await this.RunCodeManipulator<IExtractClassService>(fileContents, filePath, cursor);
         }
 
         public async Task RemoveUnusedUsingsAsync(string fileContents, string filePath, int cursor)
         {
-            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor); ;
-            var tuple = await cmp.GetCodeManipulationContextAsync();
-            var service = this.ServiceProvider.GetRequiredService<IRemoveUnusedUsingsService>();
-            await service.Convert(tuple);
-            throw new NotImplementedException("What is the right thing to return?");
+
+            await this.RunCodeManipulator<IRemoveUnusedUsingsService>(fileContents, filePath, cursor);
 
         }
 
 
         public async Task SortAsync(string fileContents, string filePath, int cursor)
         {
-            var tuple = await this.WorkspaceProvider.CreateWorkspaceAsync(fileContents, filePath);
-            var csharpSorterService = this.ServiceProvider.GetRequiredService<ICSharpSorterService>();
-            throw new NotImplementedException();
-            //var codeChanges = await csharpSorterService.SortType(tuple.workspace, tuple.document);
-            //Console.WriteLine(codeChanges);
+            await this.RunCodeManipulator<ICSharpSorterService>(fileContents, filePath, cursor);
         }
     }
 }
