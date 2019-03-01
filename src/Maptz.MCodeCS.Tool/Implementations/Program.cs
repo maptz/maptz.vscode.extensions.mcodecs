@@ -10,7 +10,7 @@ using Maptz.Coding.Analysis.CSharp.Misc;
 namespace Maptz.MCodeCS.Tool
 {
 
-    class Program : CliProgramBase<AppSettings>
+    public class Program : CliProgramBase<AppSettings>
     {
         public static void Main(string[] args)
         {
@@ -44,6 +44,7 @@ namespace Maptz.MCodeCS.Tool
             services.AddTransient<IExpressPropertyService, ExpressPropertyService>();
             services.AddTransient<IExpressStatementService, ExpressStatementService>();
             services.AddTransient<IExtractClassService, ExtractClassService>();
+            services.AddTransient<IInputPipe, DefaultInputPipe>();
             //services.AddLogging(loggingBuilder => loggingBuilder.AddConfiguration(Configuration.GetSection("Logging")).AddConsole().AddDebug());
         }
     }

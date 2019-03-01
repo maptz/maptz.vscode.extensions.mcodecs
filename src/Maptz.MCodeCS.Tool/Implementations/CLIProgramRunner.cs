@@ -16,15 +16,6 @@ using System.Threading.Tasks;
 namespace Maptz.MCodeCS.Tool
 {
 
-    public class PipedInputModel
-    {
-        public int Cursor { get; set; }
-        public string FileContents { get; set; }
-        public string FilePath { get; set; }
-
-    }
-
-
     public class CLIProgramRunner : ICliProgramRunner
     {
 
@@ -34,33 +25,25 @@ namespace Maptz.MCodeCS.Tool
         public AppSettings AppSettings { get; }
         public IServiceProvider ServiceProvider { get; }
         public IExtensionEngine ExtensionEngine { get; }
+        public IInputPipe InputPipe { get; }
 
 
         /* #endregion Public Properties */
         /* #region Public Constructors */
-        public CLIProgramRunner(IOptions<AppSettings> appSettings, IServiceProvider serviceProvider, IExtensionEngine extensionEngine)
+        public CLIProgramRunner(IOptions<AppSettings> appSettings, IServiceProvider serviceProvider, IExtensionEngine extensionEngine, IInputPipe inputPipe)
         {
             this.AppSettings = appSettings.Value;
             this.ServiceProvider = serviceProvider;
             this.ExtensionEngine = extensionEngine;
+            this.InputPipe = inputPipe;
         }
         /* #endregion Public Constructors */
 
-        private PipedInputModel ReceivePipedInput()
+
+        public PipedInputModel ReceivePipedInput()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            var s = Console.ReadLine();
-            do
-            {
-                s = Console.ReadLine();
-                if (s != null) stringBuilder.AppendLine(s);
-            } while (s != null);
-
-            var json = stringBuilder.ToString();
-            var retval = JsonConvert.DeserializeObject<PipedInputModel>(json);
-            return retval;
+            return this.InputPipe.ReceivePipedInput();
         }
-
         /* #region Public Methods */
         public async Task RunAsync(string[] args)
         {
@@ -82,7 +65,7 @@ namespace Maptz.MCodeCS.Tool
                                             return 0;
                                         });
                                     });
-                                    
+
                                 });
                 /* #endregion*/
 
@@ -148,21 +131,7 @@ namespace Maptz.MCodeCS.Tool
                     });
                 });
                 /* #endregion*/
-                /* #region correct-string-equality */
-                cla.Command("convert-to-protected-virtual", config =>
-                {
-                    config.Command("pipe", config2 =>
-                    {
-                        config2.OnExecute(async () =>
-                        {
-                            var pipedInput = ReceivePipedInput();
-                            await this.ExtensionEngine.ExpressAsPropertyAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
 
-                            return 0;
-                        });
-                    });
-                });
-                /* #endregion*/
                 /* #region create-settings */
                 cla.Command("create-settings", config =>
                 {

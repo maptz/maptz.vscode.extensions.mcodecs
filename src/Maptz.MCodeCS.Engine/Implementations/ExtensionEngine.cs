@@ -30,7 +30,8 @@ namespace Maptz.MCodeCS.Engine
 
         public async Task RunCodeManipulator<T>(string fileContents, string filePath, int cursor) where T: ICodeManipulatorService
         {
-            var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor);
+            var cmp = new SimpleCodeManipulationContextProvider(fileContents, filePath, cursorPosition: cursor);
+            //var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor);
             var tuple = await cmp.GetCodeManipulationContextAsync();
             var service = this.ServiceProvider.GetRequiredService<T>();
 
