@@ -11,6 +11,7 @@
         "Other"
     ],
     "activationEvents": [
+        "*",
         "onCommand:extension.sortClass"
     ],
     "main": "./out/extension",
@@ -25,17 +26,17 @@
             "command": "extension.sortClass",
             "key": "ctrl+m ctrl+p"
         },
-        "configuration":{
+        "configuration": {
             "title": "mcodecs configuration",
             "type": "object",
             "properties": {
-                "maptz.mcodecs":{
-                    "type":"object",
-                    "description":"Settings used for maptz sort.",
-                    "default": {
-                    }
+                "maptz.mcodecs": {
+                    "type": "object",
+                    "description": "Settings used for maptz sort.",
+                    "default": {}
                 }
             }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -45,9 +46,15 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
+        "@types/adm-zip": "^0.4.32",
+        "@types/mocha": "^2.2.42",
         "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+        "@types/request": "^2.48.1",
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6"
+    },
+    "dependencies": {
+        "adm-zip": "^0.4.13",
+        "request": "^2.88.0"
     }
 }
