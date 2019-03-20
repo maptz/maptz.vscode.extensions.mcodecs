@@ -15,7 +15,7 @@
     <ProjectReference Include="..\..\..\..\..\MaptzBitBucket\netcorelibs\maptz.coding.analysis.base\src\Maptz.Coding.Analysis.CSharp.Misc\Maptz.Coding.Analysis.CSharp.Misc.csproj" />
     <ProjectReference Include="..\..\..\..\..\MaptzBitbucket\netcorelibs\maptz.coding.analysis.base\src\Maptz.Coding.Analysis.CSharp.Sorting\Maptz.Coding.Analysis.CSharp.Sorting.csproj" />
     <ProjectReference Include="..\..\..\..\..\MaptzBitBucket\netcorelibs\maptz.coding.analysis.base\src\Maptz.Coding.Analysis.CSharp.TestCreator\Maptz.Coding.Analysis.CSharp.TestCreator.csproj" />
-    <ProjectReference Include="..\..\..\..\..\MaptzBitbucket\netcorelibs\maptz.coding.analysis.base\src\Maptz.Coding.Analysis.CSharp\Maptz.Coding.Analysis.CSharp.Base.csproj" />
+    <ProjectReference Include="..\..\..\..\..\MaptzBitbucket\netcorelibs\maptz.coding.analysis.base\src\Maptz.Coding.Analysis.CSharp.Base\Maptz.Coding.Analysis.CSharp.Base.csproj" />
   </ItemGroup>
 
 </Project>

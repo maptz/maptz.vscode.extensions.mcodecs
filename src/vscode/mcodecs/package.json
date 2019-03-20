@@ -21,12 +21,22 @@
                 "title": "Sort Class"
             }
         ],
-        "keybindings":{
+        "keybindings": {
             "command": "extension.sortClass",
             "key": "ctrl+m ctrl+p"
-        }
+        },
+        "configuration":{
+            "title": "mcodecs configuration",
+            "type": "object",
+            "properties": {
+                "maptz.mcodecs":{
+                    "type":"object",
+                    "description":"Settings used for maptz sort.",
+                    "default": {
+                    }
+                }
+            }
     },
-    
     "scripts": {
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",
