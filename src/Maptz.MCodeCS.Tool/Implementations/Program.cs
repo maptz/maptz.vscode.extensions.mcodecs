@@ -44,7 +44,8 @@ namespace Maptz.MCodeCS.Tool
             services.AddTransient<IExpressPropertyService, ExpressPropertyService>();
             services.AddTransient<IExpressStatementService, ExpressStatementService>();
             services.AddTransient<IExtractClassService, ExtractClassService>();
-            services.AddTransient<IInputPipe, DefaultInputPipe>();
+            services.AddTransient<IOutputService, OutputService>();
+            services.AddTransient<ICodeChangeImplementorService, CodeChangeImplementorService>();
             //services.AddLogging(loggingBuilder => loggingBuilder.AddConfiguration(Configuration.GetSection("Logging")).AddConsole().AddDebug());
         }
     }

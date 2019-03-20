@@ -16,11 +16,11 @@ using System.Threading.Tasks;
 namespace Maptz.MCodeCS.Tool
 {
 
+    public delegate Task EngineMethod(string fileContents, string filepath, int cursor);
+
+
     public class CLIProgramRunner : ICliProgramRunner
     {
-
-
-
         /* #region Public Properties */
         public AppSettings AppSettings { get; }
         public IServiceProvider ServiceProvider { get; }
@@ -44,6 +44,38 @@ namespace Maptz.MCodeCS.Tool
         {
             return this.InputPipe.ReceivePipedInput();
         }
+
+
+        private void WireUpEngineMethod(CommandLineApplication config, EngineMethod engineMethod)
+        {
+            var inputFileOption = config.Option("-i|--input|<inputFilePath>", "Input file path", CommandOptionType.SingleValue);
+            var cursorOption = config.Option("-c|--cursor|<cursorPos>", "Cursor position", CommandOptionType.SingleValue);
+            config.OnExecute(async () =>
+            {
+                var inputFilePath = inputFileOption.Value();
+                var cursorPositionS = cursorOption.HasValue() ? cursorOption.Value() : "0";
+                var success = int.TryParse(cursorPositionS, out int cursorPosition);
+                if (!success) throw new Exception("Invalid cursor position");
+                string contents;
+                using (var streamreader = new FileInfo(inputFilePath).OpenText())
+                {
+                    contents = streamreader.ReadToEnd();
+                }
+                await engineMethod(contents, inputFilePath, cursorPosition);
+                return 0;
+            });
+
+            config.Command("pipe", config2 =>
+            {
+                config2.OnExecute(async () =>
+                {
+                    var pipedInput = ReceivePipedInput();
+                    await engineMethod(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
+                    return 0;
+                });
+            });
+        }
+
         /* #region Public Methods */
         public async Task RunAsync(string[] args)
         {
@@ -51,151 +83,14 @@ namespace Maptz.MCodeCS.Tool
             {
                 CommandLineApplication cla = new CommandLineApplication(throwOnUnexpectedArg: false);
                 cla.HelpOption("-?|-h|--help");
-
-                /* #region sort */
-                cla.Command("sort", config =>
-                                {
-                                    config.Command("pipe", config2 =>
-                                    {
-                                        config2.OnExecute(async () =>
-                                        {
-                                            var pipedInput = ReceivePipedInput();
-                                            await this.ExtensionEngine.SortAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
-
-                                            return 0;
-                                        });
-                                    });
-
-                                });
-                /* #endregion*/
-
-                /* #region extract-class */
-                cla.Command("extract-class", config =>
-                {
-                    config.Command("pipe", config2 =>
-                    {
-                        config2.OnExecute(async () =>
-                        {
-                            var pipedInput = ReceivePipedInput();
-                            await this.ExtensionEngine.ExtractClassAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
-
-                            return 0;
-                        });
-                    });
-                });
-                /* #endregion*/
-
-                /* #region add-test */
-                cla.Command("add-test", config =>
-                {
-                    config.Command("pipe", config2 =>
-                    {
-                        config2.OnExecute(async () =>
-                        {
-                            var pipedInput = ReceivePipedInput();
-                            await this.ExtensionEngine.AddTestAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
-
-                            return 0;
-                        });
-                    });
-                });
-                /* #endregion*/
-
-                /* #region convert-to-async */
-                cla.Command("convert-to-async", config =>
-                {
-                    config.Command("pipe", config2 =>
-                    {
-                        config2.OnExecute(async () =>
-                        {
-                            var pipedInput = ReceivePipedInput();
-                            await this.ExtensionEngine.ConvertToAsyncAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
-
-                            return 0;
-                        });
-                    });
-                });
-                /* #endregion*/
-                /* #region convert-to-protected-virtual */
-                cla.Command("convert-to-protected-virtual", config =>
-                {
-                    config.Command("pipe", config2 =>
-                    {
-                        config2.OnExecute(async () =>
-                        {
-                            var pipedInput = ReceivePipedInput();
-                            await this.ExtensionEngine.ConvertToProtectedVirtualAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
-
-                            return 0;
-                        });
-                    });
-                });
-                /* #endregion*/
-
-                /* #region create-settings */
-                cla.Command("create-settings", config =>
-                {
-                    config.Command("pipe", config2 =>
-                    {
-                        config2.OnExecute(async () =>
-                        {
-                            var pipedInput = ReceivePipedInput();
-                            await this.ExtensionEngine.ExpressAsPropertyAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
-
-                            return 0;
-                        });
-                    });
-                });
-                /* #endregion*/
-
-                /* #region express-as-property */
-                cla.Command("express-as-property", config =>
-                {
-                    config.Command("pipe", config2 =>
-                    {
-                        config2.OnExecute(async () =>
-                        {
-                            var pipedInput = ReceivePipedInput();
-                            await this.ExtensionEngine.ExpressAsPropertyAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
-
-                            return 0;
-                        });
-                    });
-                });
-                /* #endregion*/
-
-                /* #region express-as-statement */
-                cla.Command("express-as-statement", config =>
-                {
-                    config.Command("pipe", config2 =>
-                    {
-                        config2.OnExecute(async () =>
-                        {
-                            var pipedInput = ReceivePipedInput();
-                            await this.ExtensionEngine.ExpressAsStatementAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
-
-                            return 0;
-                        });
-                    });
-                });
-                /* #endregion*/
-
-                /* #region remove-unused-usings */
-                cla.Command("remove-unused-usings", config =>
-                {
-                    config.Command("pipe", config2 =>
-                    {
-                        config2.OnExecute(async () =>
-                        {
-                            var pipedInput = ReceivePipedInput();
-                            await this.ExtensionEngine.RemoveUnusedUsingsAsync(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
-
-                            return 0;
-                        });
-                    });
-                });
-                /* #endregion*/
-
+                cla.Command("add-test", config => WireUpEngineMethod(config, this.ExtensionEngine.AddTestAsync));
+                cla.Command("convert-to-async", config => WireUpEngineMethod(config, this.ExtensionEngine.ConvertToAsyncAsync));
+                cla.Command("convert-to-protected-virtual", config => WireUpEngineMethod(config, this.ExtensionEngine.ConvertToProtectedVirtualAsync));
+                cla.Command("extract-class", config => WireUpEngineMethod(config, this.ExtensionEngine.ExtractClassAsync));
+                cla.Command("express-as-property", config => WireUpEngineMethod(config, this.ExtensionEngine.ExpressAsPropertyAsync));
+                cla.Command("express-as-statement", config => WireUpEngineMethod(config, this.ExtensionEngine.ExpressAsStatementAsync));
+                cla.Command("remove-unused-usings", config => WireUpEngineMethod(config, this.ExtensionEngine.RemoveUnusedUsingsAsync));
+                cla.Command("sort", config => WireUpEngineMethod(config, this.ExtensionEngine.SortAsync));
                 /* #region Default */
                 //Just show the help text.
                 cla.OnExecute(() =>
