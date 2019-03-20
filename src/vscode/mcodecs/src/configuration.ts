@@ -10,6 +10,7 @@ export interface IConfiguration {
     toolZipFileNameFormat : string;
     toolFileNameBase : string;
     toolVersion: string;
+    toolExeArgsPrefix: string | null;
   }
 
 export class Configuration implements IConfiguration{
@@ -19,6 +20,7 @@ export class Configuration implements IConfiguration{
     public toolZipFileNameFormat : string = "Maptz.MCodeCS.Tool.{rid}.{version}.zip"
     public toolFileNameBase : string = "Maptz.MCodeCS.Tool"
     public toolVersion : string = "0.0.1";
+    public toolExeArgsPrefix: string | null = null;
 
     public static loadConfiguration() {
         let loadedConfig = vscode.workspace
@@ -31,4 +33,13 @@ export class Configuration implements IConfiguration{
         config = Object.assign(config, loadedConfig);
         return config;
       }
+}
+
+export class DebugConfiguration extends Configuration{
+  constructor(){
+    super();
+
+    this.toolPathOverride = "C:\\Program Files\\dotnet\\dotnet.exe";
+    this.toolExeArgsPrefix = 'run -p X:\\+++DEV\\MaptzGitHub\\vscode\\maptz.vscode.extensions.mcodecs\\src\\Maptz.MCodeCS.Tool\\Maptz.MCodeCS.Tool.csproj --';
+  }
 }

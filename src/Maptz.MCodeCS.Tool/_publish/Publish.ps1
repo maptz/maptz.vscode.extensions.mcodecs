@@ -18,7 +18,7 @@ Function CreateZipFile($rid){
     $version = $version.Trim()
     Write-Host "Publishing version: $version with RID $rid."
     
-    $win10Path = "$PSScriptRoot\..\bin\Release\netcoreapp2.1\$rid"
+    $win10Path = "$PSScriptRoot\..\bin\Release\netcoreapp2.1\$rid\publish"
     if (Test-Path $win10Path){
         Remove-Item $win10Path -Recurse -Force
     }

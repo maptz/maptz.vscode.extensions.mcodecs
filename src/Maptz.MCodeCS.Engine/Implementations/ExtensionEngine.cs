@@ -28,7 +28,7 @@ namespace Maptz.MCodeCS.Engine
         public IServiceProvider ServiceProvider { get; }
         public IOutputService OutputService { get; }
 
-        public async Task RunCodeManipulator<T>(string fileContents, string filePath, int cursor) where T: ICodeManipulatorService
+        public async Task RunCodeManipulator<T>(string fileContents, string filePath, int cursor) where T : ICodeManipulatorService
         {
             var cmp = new SimpleCodeManipulationContextProvider(fileContents, filePath, cursorPosition: cursor);
             //var cmp = new SimpleCodeManipulationContextProvider(fileContents, Path.GetFileName(filePath), cursorPosition: cursor);
@@ -39,7 +39,13 @@ namespace Maptz.MCodeCS.Engine
             var implementor = this.ServiceProvider.GetRequiredService<ICodeChangeImplementorService>() as CodeChangeImplementorService;
             await implementor.ApplyChangeAsync(tuple, cr);
 
-            var json = JsonConvert.SerializeObject(implementor.Changes);
+            var obj = new
+            {
+                Changes = implementor.Changes,
+                Error = (string) null
+            };
+
+            var json = JsonConvert.SerializeObject(obj);
             this.OutputService.Write(json);
         }
 
@@ -61,21 +67,21 @@ namespace Maptz.MCodeCS.Engine
         public async Task ExpandPropertyAsync(string fileContents, string filePath, int cursor)
         {
             await this.RunCodeManipulator<IExpandPropertyService>(fileContents, filePath, cursor);
-            
+
         }
 
         public async Task ExpressAsPropertyAsync(string fileContents, string filePath, int cursor)
         {
             await this.RunCodeManipulator<IExpressPropertyService>(fileContents, filePath, cursor);
 
-            
+
         }
 
         public async Task ExpressAsStatementAsync(string fileContents, string filePath, int cursor)
         {
             await this.RunCodeManipulator<IExpressStatementService>(fileContents, filePath, cursor);
 
-            
+
 
         }
 

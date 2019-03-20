@@ -70,6 +70,7 @@ namespace Maptz.MCodeCS.Tool
                 config2.OnExecute(async () =>
                 {
                     var pipedInput = ReceivePipedInput();
+                    if (pipedInput == null) throw new Exception("No piped input");
                     await engineMethod(pipedInput.FileContents, pipedInput.FilePath, pipedInput.Cursor);
                     return 0;
                 });

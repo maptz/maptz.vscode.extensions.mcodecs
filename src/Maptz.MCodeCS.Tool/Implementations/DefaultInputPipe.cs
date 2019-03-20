@@ -19,17 +19,31 @@ namespace Maptz.MCodeCS.Tool
     {
         public PipedInputModel ReceivePipedInput()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            var s = Console.ReadLine();
-            do
+            //https://daveaglick.com/posts/capturing-standard-input-in-csharp
+            
+            string stdin = null;
+            if (Console.IsInputRedirected)
             {
-                s = Console.ReadLine();
-                if (s != null) stringBuilder.AppendLine(s);
-            } while (s != null);
-
-            var json = stringBuilder.ToString();
-            var retval = JsonConvert.DeserializeObject<PipedInputModel>(json);
+                using (StreamReader reader = new StreamReader(Console.OpenStandardInput(), Console.InputEncoding))
+                {
+                    stdin = reader.ReadToEnd();
+                }
+            }
+            var retval = JsonConvert.DeserializeObject<PipedInputModel>(stdin);
             return retval;
+            //StringBuilder stringBuilder = new StringBuilder();
+            //var s = Console.ReadLine();
+            //do
+            //{
+            //    s = Console.ReadLine();
+            //    Console.WriteLine("Piped input Read line: " + s);
+            //    if (s != null) stringBuilder.AppendLine(s);
+            //} while (s != null);
+
+            //Console.WriteLine("Piped input: " + stringBuilder.ToString());
+            //var json = stringBuilder.ToString();
+            //var retval = JsonConvert.DeserializeObject<PipedInputModel>(json);
+            //return retval;
         }
     }
 }

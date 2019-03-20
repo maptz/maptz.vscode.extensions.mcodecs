@@ -1,60 +1,118 @@
 {
-    "name": "mcodecs",
-    "displayName": "mcodecs",
-    "description": "mcodecs",
-    "version": "0.0.1",
-    "publisher": "maptz",
-    "engines": {
-        "vscode": "^1.30.0"
-    },
-    "categories": [
-        "Other"
+  "name": "mcodecs",
+  "displayName": "mcodecs",
+  "description": "mcodecs",
+  "version": "0.0.1",
+  "publisher": "maptz",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*",
+    "onCommand:extension.sortClass"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.addTest",
+        "title": "Add test"
+      },
+      {
+        "command": "extension.convertToAsync",
+        "title": "Convert to async"
+      },
+      {
+        "command": "extension.convertToProtectedVirtual",
+        "title": "Convert to protected virtual"
+      },
+      {
+        "command": "extension.extractClass",
+        "title": "Extract class"
+      },
+      {
+        "command": "extension.extractAsProperty",
+        "title": "Extract as property"
+      },
+      {
+        "command": "extension.extractAsStatement",
+        "title": "Extract as statment"
+      },
+      {
+        "command": "extension.removeUnusedUsings",
+        "title": "Remove unused usings"
+      },
+      {
+        "command": "extension.sortClass",
+        "title": "Sort Class"
+      }
     ],
-    "activationEvents": [
-        "*",
-        "onCommand:extension.sortClass"
+    "keybindings": [
+      {
+        "command": "extension.addTest",
+        "key": "ctrl+m ctrl+t"
+      },
+      {
+        "command": "extension.convertToAsync",
+        "key": "ctrl+m ctrl+6"
+      },
+      {
+        "command": "extension.convertToProtectedVirtual",
+        "key": "ctrl+m ctrl+7"
+      },
+      {
+        "command": "extension.extractClass",
+        "key": "ctrl+m ctrl+e"
+      },
+      {
+        "command": "extension.extractAsProperty",
+        "key": "ctrl+m ctrl+a"
+      },
+      {
+        "command": "extension.extractAsStatement",
+        "key": "ctrl+m ctrl+s"
+      },
+      {
+        "command": "extension.removeUnusedUsings",
+        "key": "ctrl+m ctrl+f4"
+      },
+      {
+        "command": "extension.sortClass",
+        "key": "ctrl+m ctrl+p"
+      }
     ],
-    "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.sortClass",
-                "title": "Sort Class"
-            }
-        ],
-        "keybindings": {
-            "command": "extension.sortClass",
-            "key": "ctrl+m ctrl+p"
-        },
-        "configuration": {
-            "title": "mcodecs configuration",
-            "type": "object",
-            "properties": {
-                "maptz.mcodecs": {
-                    "type": "object",
-                    "description": "Settings used for maptz sort.",
-                    "default": {}
-                }
-            }
+    "configuration": {
+      "title": "mcodecs configuration",
+      "type": "object",
+      "properties": {
+        "maptz.mcodecs": {
+          "type": "object",
+          "description": "Settings used for maptz sort.",
+          "default": {}
         }
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "@types/adm-zip": "^0.4.32",
-        "@types/mocha": "^2.2.42",
-        "@types/node": "^7.0.43",
-        "@types/request": "^2.48.1",
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6"
-    },
-    "dependencies": {
-        "adm-zip": "^0.4.13",
-        "request": "^2.88.0"
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.4.32",
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^7.0.43",
+    "@types/request": "^2.48.1",
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6"
+  },
+  "dependencies": {
+    "adm-zip": "^0.4.13",
+    "request": "^2.88.0"
+  }
 }

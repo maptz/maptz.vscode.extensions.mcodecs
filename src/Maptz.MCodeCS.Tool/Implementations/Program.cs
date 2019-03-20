@@ -46,6 +46,7 @@ namespace Maptz.MCodeCS.Tool
             services.AddTransient<IExtractClassService, ExtractClassService>();
             services.AddTransient<IOutputService, OutputService>();
             services.AddTransient<ICodeChangeImplementorService, CodeChangeImplementorService>();
+            services.AddTransient<IInputPipe, DefaultInputPipe>();
             //services.AddLogging(loggingBuilder => loggingBuilder.AddConfiguration(Configuration.GetSection("Logging")).AddConsole().AddDebug());
         }
     }

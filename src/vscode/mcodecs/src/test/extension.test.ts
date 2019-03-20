@@ -1,22 +1,66 @@
-//
-// Note: This example test is leveraging the Mocha test framework.
-// Please refer to their documentation on https://mochajs.org/ for help.
-//
-
-// The module 'assert' provides assertion methods from node
-import * as assert from 'assert';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
-// import * as vscode from 'vscode';
+import * as assert from "assert";
+import * as configuration from "./../configuration";
+import * as toolDownloader from "../tool";
+import * as path from "path";
+import * as fs from "fs";
 // import * as myExtension from '../extension';
+const skipLongRunningTests = false;
 
-// Defines a Mocha test suite to group tests of similar kind together
-suite("Extension Tests", function () {
+/* #region Common Functions */
+function deleteFolderRecursive(path: string) {
+  if (fs.existsSync(path)) {
+    fs.readdirSync(path).forEach(function(file, index) {
+      var curPath = path + "/" + file;
+      if (fs.lstatSync(curPath).isDirectory()) {
+        // recurse
+        deleteFolderRecursive(curPath);
+      } else {
+        // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+}
+/* #endregion */
 
-    // Defines a Mocha unit test
-    test("Something 1", function() {
-        assert.equal(-1, [1, 2, 3].indexOf(5));
-        assert.equal(-1, [1, 2, 3].indexOf(0));
+/* #region  toolDownloader Tests */
+suite("toolDownloader Tests", function() {
+  test("ToolDownloader constructs", function() {
+    const config = new configuration.Configuration();
+    const td = new toolDownloader.ToolInfo(config);
+    assert.ok(td, "ToolDownloader constructor failed.");
+  });
+
+  test("ToolDownloader.rid returns expected value.", function() {
+    const config = new configuration.Configuration();
+    const td = new toolDownloader.ToolInfo(config);
+    assert.equal("win10-x64", td.rid);
+  });
+
+  test("ToolDownloader.toolExePath returns expected default value.", function() {
+    const config = new configuration.Configuration();
+    const td = new toolDownloader.ToolInfo(config);
+    assert.equal(
+      "X:\\+++DEV\\MaptzGitHub\\vscode\\maptz.vscode.extensions.mcodecs\\src\\vscode\\mcodecs\\0.0.1\\Maptz.MCodeCS.Tool.exe",
+      td.toolExePath
+    );
+  });
+
+  !skipLongRunningTests &&
+    test("ToolDownloader.doDownloadAsync creates a file.", async function() {
+      this.timeout(1200000); //Increase the timeout.
+      const config = new configuration.Configuration();
+      const td = new toolDownloader.ToolInfo(config);
+
+      var toolDirectoryPath = path.dirname(td.toolExePath);
+      deleteFolderRecursive(toolDirectoryPath);
+
+      await td.doDownloadAsync();
+
+      let fileExists = fs.existsSync(td.toolExePath);
+      assert.ok(fileExists, "ToolDownloader did not correctly download tool");
     });
 });
+/* #endregion */
+
