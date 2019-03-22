@@ -6,7 +6,7 @@ import * as tools from "./tool";
 import * as config from "./configuration";
 import * as codechange from "./codechange";
 
-const debugMode = false;
+const debugMode = true;
 console.log('Congratulations, your extension "mcodecs" is now active!');
 const outputChannelName = "Maptz.MCodeCS";
 let outputChannel = vscode.window.createOutputChannel(outputChannelName);

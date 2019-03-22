@@ -42,6 +42,6 @@ export class DebugConfiguration extends Configuration {
 
     this.toolPathOverride = "C:\\Program Files\\dotnet\\dotnet.exe";
     this.toolExeArgsPrefix =
-      "run -p X:\\+++DEV\\MaptzGitHub\\vscode\\maptz.vscode.extensions.mcodecs\\src\\Maptz.MCodeCS.Tool\\Maptz.MCodeCS.Tool.csproj --verbosity quiet --";
+      "run -p X:\\+++DEV\\MaptzGitHub\\netcoretools\\maptz.mcodecs.tool\\src\\Maptz.MCodeCS.Tool\\Maptz.MCodeCS.Tool.csproj --verbosity quiet --";
   }
 }
