@@ -98,16 +98,19 @@ export class ToolRunner {
             rej(codeChanges.error);
           } else {
             if (!codeChanges.changes || codeChanges.changes.length == 0) return;
-            for (let i = codeChanges.changes.length - 1; i >= 0; i--) {
-              const codeChange = codeChanges.changes[i];
+            
+              
               await textEditor.edit(editBuilder => {
+                for (let i = codeChanges.changes.length - 1; i >= 0; i--) {
+                const codeChange = codeChanges.changes[i];
                 const range = new vscode.Range(
                   textEditor.document.positionAt(codeChange.start),
                   textEditor.document.positionAt(codeChange.end)
                 );
                 editBuilder.replace(range, codeChange.newText);
+                }
               });
-            }
+            
             res();
           }
         }
