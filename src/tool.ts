@@ -172,6 +172,12 @@ export class ToolDownloader {
     this._logger.logInformation(`Extracting to ${outputPath}`);
     this._outputChannel.appendLine(`   Extracting tool from zip file.`);
     await this.unzipBuffer(body, outputPath);
+    //On osx and linux you need to give permissions to run this. 
+    if (rid.startsWith("linux-") || rid.startsWith("osx-")){
+      this._outputChannel.appendLine(`Applying permissions to downloaded executable.`);
+      fs.chmodSync(this._toolInfo.toolExePath, '755');
+    }
+    //chmod a+x Maptz.MCodeCS.Tool
     this._logger.logInformation(`Tool file extracted to ${outputPath}`);
   }
 
