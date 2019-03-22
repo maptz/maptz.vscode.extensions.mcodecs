@@ -3,7 +3,7 @@
   "displayName": "mcodecs",
   "description": "Extends VS code to provide a number of helpful operations on C# files.",
   "repository": "https://github.com/maptz/maptz.vscode.extensions.mcodecs",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "publisher": "maptz",
   "engines": {
     "vscode": "^1.30.0"

@@ -43,7 +43,25 @@ export class ToolInfo implements IToolInfo {
     const extension = vscode.extensions.getExtension("maptz.mcodecs");
     if (!extension) throw "Cannot find extension 'maptz.mcodecs'.";
     const extensionPath = extension.extensionPath;
-    const exeName = this._configuration.toolFileNameBase + ".exe";
+    let fileExtension = "";
+    const platform = os.platform();
+    switch (platform) {
+      case "darwin":
+        fileExtension = "";
+        break;
+      case "aix":
+      case "freebsd":
+      case "linux":
+      case "openbsd":
+      case "sunos":
+        fileExtension = "";
+        break;
+      case "win32":
+        fileExtension = ".exe";
+        break;
+    }
+
+    const exeName = this._configuration.toolFileNameBase + fileExtension;
     const retval = path.join(
       extensionPath,
       "bin",
@@ -143,7 +161,7 @@ export class ToolDownloader {
     let toolProportion = -1000;
     this._logger.logInformation(`Downloading application from ${url}`);
     const body = await this.doDownloadUrl(url, prop => {
-      if ( prop - toolProportion > 0.05) {
+      if (prop - toolProportion > 0.05) {
         toolProportion = prop;
         const percent = (toolProportion * 100.0).toFixed(1);
         this._outputChannel.appendLine(`   Downloaded ${percent} %`);
