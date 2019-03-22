@@ -1,0 +1,135 @@
+{
+  "name": "mcodecs",
+  "displayName": "mcodecs",
+  "description": "Extends VS code to provide a number of helpful operations on C# files.",
+  "repository": "https://github.com/maptz/maptz.vscode.extensions.mcodecs",
+  "version": "0.0.2",
+  "publisher": "maptz",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*",
+    "onCommand:mcodecs.sortClass"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mcodecs.addTest",
+        "title": "Add test"
+      },
+      {
+        "command": "mcodecs.convertToAsync",
+        "title": "Convert to async"
+      },
+      {
+        "command": "mcodecs.convertToProtectedVirtual",
+        "title": "Convert to protected virtual"
+      },
+      {
+        "command": "mcodecs.createSettings",
+        "title": "Create and IOptions class."
+      },
+      {
+        "command": "mcodecs.expressAsProperty",
+        "title": "Extract as property"
+      },
+      {
+        "command": "mcodecs.expressAsStatement",
+        "title": "Extract as statment"
+      },
+      {
+        "command": "mcodecs.expandProperty",
+        "title": "Expand property"
+      },
+      {
+        "command": "mcodecs.extractClass",
+        "title": "Extract class"
+      },
+      {
+        "command": "mcodecs.removeUnusedUsings",
+        "title": "Remove unused usings"
+      },
+      {
+        "command": "mcodecs.sortClass",
+        "title": "Sort Class"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "mcodecs.addTest",
+        "key": "ctrl+m ctrl+t"
+      },
+      {
+        "command": "mcodecs.convertToAsync",
+        "key": "ctrl+m ctrl+6"
+      },
+      {
+        "command": "mcodecs.convertToProtectedVirtual",
+        "key": "ctrl+m ctrl+7"
+      },
+      {
+        "command": "mcodecs.createSettings",
+        "key": "ctrl+m ctrl+s"
+      },
+      {
+        "command": "mcodecs.expandProperty",
+        "key": "ctrl+m ctrl+d"
+      },
+      {
+        "command": "mcodecs.expressAsProperty",
+        "key": "ctrl+m ctrl+z"
+      },
+      {
+        "command": "mcodecs.expressAsStatement",
+        "key": "ctrl+m ctrl+x"
+      },
+      {
+        "command": "mcodecs.extractClass",
+        "key": "ctrl+m ctrl+e"
+      },
+      {
+        "command": "mcodecs.removeUnusedUsings",
+        "key": "ctrl+m ctrl+f4"
+      },
+      {
+        "command": "mcodecs.sortClass",
+        "key": "ctrl+m ctrl+p"
+      }
+    ],
+    "configuration": {
+      "title": "mcodecs configuration",
+      "type": "object",
+      "properties": {
+        "maptz.mcodecs": {
+          "type": "object",
+          "description": "Settings used for maptz sort.",
+          "default": {}
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.4.32",
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^7.0.43",
+    "@types/request": "^2.48.1",
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6"
+  },
+  "dependencies": {
+    "adm-zip": "^0.4.13",
+    "request": "^2.88.0"
+  }
+}

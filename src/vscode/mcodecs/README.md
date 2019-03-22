@@ -1,65 +1,123 @@
-# mcodecs README
+# Maptz MCode CS
 
-This is the README for your extension "mcodecs". After writing up a brief description, we recommend including the following sections.
+Extends VS code to provide a number of helpful operations on C# files.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+MCode CS is an open source Visual Studio Code extension. It currently supports a number of different operations:
 
-For example if there is an image subfolder under your extension project workspace:
+- Add test *(Currently not working)*
+- Convert to async
+- Convert to protected virtual
+- Create settings
+- Extract class
+- Expand property *(Currently not working)*
+- Express as property
+- Express as statement
+- Remove unused usings
+- Sort
 
-\!\[feature X\]\(images/feature-x.png\)
+Each of these features is described individually in the sections below. 
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### Add Test (Currently not working)
+
+Adds a test method matching the method that the cursor is at. This extension assumes that tests adopt a set of conventions.
+
+- The test project should be in the same parent directory as the current project directory. 
+- The test project is has the same as the project with a `.Tests` suffix, so if your project is called `SomeProject`, then the test project will be called `SomeProject.Tests`.
+
+> Default keybinding `ctrl+m ctrl+t`
+
+### Convert to async 
+
+Converts the method at the cursor to an `async` method. 
+
+> Default keybinding `ctrl+m ctrl+6`
+
+![](/imgs/convert-to-async.gif)
+
+### Convert to protected virtual
+
+Converts the method at the cursor to an `protected virtual` method.
+
+> Default keybinding `ctrl+m ctrl+7`
+
+![](/imgs/convert-to-protected-virtual.gif)
+
+### Create settings
+
+Creates a class for storing settings for the current class. This method assumes you are using the .net core pattern in the Nuget package `Microsoft.Extensions.Options`. A poco class is created with the same name as the current class with the suffix `Settings`. Additionally, an instance of `IOptions<>` is added as a property on the current class injected by the constructor.
+
+> Default keybinding `ctrl+m ctrl+s`
+
+![](/imgs/create-settings.gif)
+
+
+### Expand property (Currently not working)
+
+Expands the current property to expose backing fields
+
+> Default keybinding `ctrl+m ctrl+d`
+
+### Express as property 
+
+Expands the current statement to set a sensibly named property based on the current context
+
+> Default keybinding `ctrl+m ctrl+z`
+
+![](/imgs/express-as-property.gif)
+
+### Express as statement
+
+Expands the current statement to create a sensibly named variable based on the current context
+
+> Default keybinding `ctrl+m ctrl+x`
+
+![](/imgs/express-as-statement.gif)
+
+### Extract class
+
+Extracts the current class into a new file whose name matches the name of the class.
+
+> Default keybinding `ctrl+m ctrl+e`
+
+![](/imgs/extract-class.gif)
+
+### Remove unused usings
+
+Removes any unused using statements from the current document.
+
+> Default keybinding `ctrl+m ctrl+f4`
+
+![](/imgs/remove-unused-usings.gif)
+
+
+### Sort
+
+Sorts the members of the current class. 
+
+> Default keybinding `ctrl+m ctrl+f4`
+
+![](/imgs/sort.gif)
+
+
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+The extension relies on execution of a cross-platform .net executable. When the extension is first run, it makes an attempt to download the executable to the `bin` directory of the extension. The code for this service can be found at 
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+The extension currently doesn't expose any settings.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Please log any known issues on the [github issues page](https://github.com/maptz/maptz.vscode.extensions.mcodecs/issues) for this extension.
+
+- Currently `Add-Test` is not fully supported.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+The initial alpha-quality release of the extension.
