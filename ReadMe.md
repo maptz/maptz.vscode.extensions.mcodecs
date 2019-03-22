@@ -118,6 +118,18 @@ Please log any known issues on the [github issues page](https://github.com/maptz
 
 ## Release Notes
 
+### 0.0.6
+
+Minor updates and bug fixes
+
+### 0.0.5
+
+Minor updates and bug fixes
+
+### 0.0.4
+
+Minor updates and bug fixes
+
 ### 0.0.3
 
 Minor publish updates.
