@@ -20,7 +20,7 @@ export class Configuration implements IConfiguration {
   public toolZipFileNameFormat: string =
     "Maptz.MCodeCS.Tool.{rid}.{version}.zip";
   public toolFileNameBase: string = "Maptz.MCodeCS.Tool";
-  public toolVersion: string = "0.0.1";
+  public toolVersion: string = "0.0.2";
   public toolExeArgsPrefix: string | null = null;
 
   public static loadConfiguration(debugMode: boolean = false) {

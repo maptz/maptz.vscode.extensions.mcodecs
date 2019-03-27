@@ -11,30 +11,30 @@ MCode CS is an open source Visual Studio Code extension. It currently supports a
 - Convert to protected virtual
 - Create settings
 - Extract class
-- Expand property *(Currently not working)*
+- Expand property
 - Express as property
 - Express as statement
 - Remove unused usings
 - Sort
 
-Each of these features is described individually in the sections below. 
+Each of these features is described individually in the sections below.
 
 ### Add Test (Currently not working)
 
 Adds a test method matching the method that the cursor is at. This extension assumes that tests adopt a set of conventions.
 
-- The test project should be in the same parent directory as the current project directory. 
+- The test project should be in the same parent directory as the current project directory.
 - The test project is has the same as the project with a `.Tests` suffix, so if your project is called `SomeProject`, then the test project will be called `SomeProject.Tests`.
 
 > Default keybinding `ctrl+m ctrl+t`
 
-### Convert to async 
+### Convert to async
 
-Converts the method at the cursor to an `async` method. 
+Converts the method at the cursor to an `async` method.
 
 > Default keybinding `ctrl+m ctrl+6`
 
-![](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/convert-to-async.gif)
+![Convert to async](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/convert-to-async.gif)
 
 ### Convert to protected virtual
 
@@ -42,7 +42,7 @@ Converts the method at the cursor to an `protected virtual` method.
 
 > Default keybinding `ctrl+m ctrl+7`
 
-![](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/convert-to-async.gif/imgs/convert-to-protected-virtual.gif)
+![Convert to protected virtual](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/convert-to-async.gif/imgs/convert-to-protected-virtual.gif)
 
 ### Create settings
 
@@ -50,22 +50,23 @@ Creates a class for storing settings for the current class. This method assumes 
 
 > Default keybinding `ctrl+m ctrl+s`
 
-![](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/create-settings.gif)
+![Create settings](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/create-settings.gif)
 
+### Expand property
 
-### Expand property (Currently not working)
+Expands the current property to expose backing fields.
 
-Expands the current property to expose backing fields
+![Expand property](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/expand-property.gif)
 
 > Default keybinding `ctrl+m ctrl+d`
 
-### Express as property 
+### Express as property
 
 Expands the current statement to set a sensibly named property based on the current context
 
 > Default keybinding `ctrl+m ctrl+z`
 
-![](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/express-as-property.gif)
+![Express as property](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/express-as-property.gif)
 
 ### Express as statement
 
@@ -73,7 +74,7 @@ Expands the current statement to create a sensibly named variable based on the c
 
 > Default keybinding `ctrl+m ctrl+x`
 
-![](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/express-as-statement.gif)
+![Express as statement](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/express-as-statement.gif)
 
 ### Extract class
 
@@ -81,7 +82,7 @@ Extracts the current class into a new file whose name matches the name of the cl
 
 > Default keybinding `ctrl+m ctrl+e`
 
-![](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/extract-class.gif)
+![Extract class](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/extract-class.gif)
 
 ### Remove unused usings
 
@@ -89,18 +90,15 @@ Removes any unused using statements from the current document.
 
 > Default keybinding `ctrl+m ctrl+f4`
 
-![](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/remove-unused-usings.gif)
-
+![Remove unused usings](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/remove-unused-usings.gif)
 
 ### Sort
 
-Sorts the members of the current class. 
+Sorts the members of the current class.
 
 > Default keybinding `ctrl+m ctrl+f4`
 
-![](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/sort.gif)
-
-
+![sort](https://raw.githubusercontent.com/maptz/maptz.vscode.extensions.mcodecs/master/imgs/sort.gif)
 
 ## Requirements
 
@@ -117,6 +115,10 @@ Please log any known issues on the [github issues page](https://github.com/maptz
 - Currently `Add-Test` is not fully supported.
 
 ## Release Notes
+
+### 0.0.8
+
+Fixed Expand Property implementation.
 
 ### 0.0.7
 
